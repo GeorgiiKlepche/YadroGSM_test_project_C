@@ -11,37 +11,82 @@
 #define EVENT_CLIENT_WAITING 3
 #define EVENT_CLIENT_LEFT 4
 
-// Идентификаторы исходящих событий
-#define EVENT_CLIENT_LEFT_END_OF_DAY 11
-#define EVENT_CLIENT_SEATED_FROM_QUEUE 12
-#define EVENT_ERROR 13
+// Статус клиента
+#define CLIENT_NOT_BUSY -1
+#define CLIENT_NOT_IN_CLUB 0
+#define CLIENT_IN_CLUB 1
+#define CLIENT_WAITING 2
 
-// Сообщения об ошибках
-#define ERROR_YOU_SHALL_NOT_PASS "YouShallNotPass"
-#define ERROR_NOT_OPEN_YET "NotOpenYet"
-#define ERROR_PLACE_IS_BUSY "PlaceIsBusy"
-#define ERROR_CLIENT_UNKNOWN "ClientUnknown"
-#define ERROR_ICAN_WAIT_NO_LONGER "ICanWaitNoLonger!"
+// Статус компьютерного стола
+#define TABLE_FREE 0
+#define TABLE_BUSY 1
 
+// Размер времени
 #define TIME_SIZE 6
 
-// Структура для хранение информации об 1 событии
+#define SUCCESS 0
+#define ERROR -1
+
+/* Структура для хранение информации об 1 событии.
+ * char time - время события.
+ * int index - идентификатор события.
+ * char name - тело события.
+ * int table_number - Если идентификатор события = EVENT_CLIENT_SEATED, то это
+ * номер стола. */
 typedef struct {
     char time[TIME_SIZE];
     int index;
-    char name[10];
+    char name[21];
     int table_number;
 } Event;
 
-// Структура для хранения информации о всех событиях
+/* Структура для хранение информации о всех событиях.
+ * Event events - список всех событий.
+ * int size - размер структуры.
+ * int capacity - заполненность структуры. */
 typedef struct {
     Event *events;
     int size;
     int capacity;
 } EventList;
 
+/* Структура для хранение информации о клиенте.
+ * char name - тело события.
+ * int status - статус клиента.
+ * int table - номер стола. */
+typedef struct {
+    char name[21];
+    int status;
+    int table;
+} Client;
+
+/* Структура для хранение информации о 'столе'.
+ * int busy_by - статус занятости.
+ * char *client_name - имя клиента.
+ * int start_time - время начала занятости.
+ * int busy_time - время занятости.
+ * int revenue - доход. */
+typedef struct {
+    int busy_by;
+    char *client_name;
+    int start_time;
+    int busy_time;
+    int revenue;
+} Table;
+
 // Функции event.c
 void init_event_list(EventList *list);
 void free_event_list(EventList *list);
+int add_event(EventList *list, Event *event);
+int working_time(const char *current_time, const char *start_time,
+                 const char *end_time);
+int time_to_minutes(const char *time);
+void minutes_to_time(int minutes, char *time);
+int handler_events(EventList *list, int table_count, char *start_time,
+                    char *end_time, int price_per_hour);
+
+// Функции parser.c
+int parse_input(const char *filename, EventList *event_list, int *table_count,
+                char *start_time, char *end_time, int *price_per_hour);
 
 #endif  // COMP_MANAGER_H
