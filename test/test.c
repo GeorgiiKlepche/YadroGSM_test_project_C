@@ -137,6 +137,70 @@ START_TEST(parse_input_1) {
 }
 END_TEST
 
+START_TEST(parse_input_2) {
+    const char *test_filename = "test/test_input2.txt";
+
+    EventList event_list;
+    init_event_list(&event_list);
+    int table_count;
+    char start_time[TIME_SIZE];
+    char end_time[TIME_SIZE];
+    int price_per_hour;
+
+    ck_assert_int_eq(parse_input(test_filename, &event_list, &table_count,
+                                 start_time, end_time, &price_per_hour),
+                     ERROR);
+}
+END_TEST
+
+START_TEST(parse_input_3) {
+    const char *test_filename = "test/no_file.txt";
+
+    EventList event_list;
+    init_event_list(&event_list);
+    int table_count;
+    char start_time[TIME_SIZE];
+    char end_time[TIME_SIZE];
+    int price_per_hour;
+
+    ck_assert_int_eq(parse_input(test_filename, &event_list, &table_count,
+                                 start_time, end_time, &price_per_hour),
+                     ERROR);
+}
+END_TEST
+
+START_TEST(parse_input_4) {
+    const char *test_filename = "test/test_input3.txt";
+
+    EventList event_list;
+    init_event_list(&event_list);
+    int table_count;
+    char start_time[TIME_SIZE];
+    char end_time[TIME_SIZE];
+    int price_per_hour;
+
+    ck_assert_int_eq(parse_input(test_filename, &event_list, &table_count,
+                                 start_time, end_time, &price_per_hour),
+                     ERROR);
+}
+END_TEST
+
+START_TEST(parse_input_5) {
+    const char *test_filename = "test/test_input4.txt";
+
+    EventList event_list;
+    init_event_list(&event_list);
+    int table_count;
+    char start_time[TIME_SIZE];
+    char end_time[TIME_SIZE];
+    int price_per_hour;
+
+    ck_assert_int_eq(parse_input(test_filename, &event_list, &table_count,
+                                 start_time, end_time, &price_per_hour),
+                     ERROR);
+}
+END_TEST
+
 Suite *club_manager_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -151,8 +215,11 @@ Suite *club_manager_suite(void) {
     tcase_add_test(tc_core, time_to_minutes_1);
     tcase_add_test(tc_core, minutes_to_time_1);
     tcase_add_test(tc_core, handler_events_1);
-
     tcase_add_test(tc_core, parse_input_1);
+    tcase_add_test(tc_core, parse_input_2);
+    tcase_add_test(tc_core, parse_input_3);
+    tcase_add_test(tc_core, parse_input_4);
+    tcase_add_test(tc_core, parse_input_5);
     suite_add_tcase(s, tc_core);
 
     return s;

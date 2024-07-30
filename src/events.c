@@ -58,7 +58,7 @@ void minutes_to_time(int minutes, char *time) {
  * Принимает на вход список всех событий из файла, количество столов, время
  * начала работы клуба, время конца работы клуба, цену за час. */
 int handler_events(EventList *list, int table_count, char *start_time,
-                    char *end_time, int price_per_hour) {
+                   char *end_time, int price_per_hour) {
     printf("%s\n", start_time);
 
     Table *tables = calloc(table_count, sizeof(Table));

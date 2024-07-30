@@ -83,7 +83,7 @@ int working_time(const char *current_time, const char *start_time,
 int time_to_minutes(const char *time);
 void minutes_to_time(int minutes, char *time);
 int handler_events(EventList *list, int table_count, char *start_time,
-                    char *end_time, int price_per_hour);
+                   char *end_time, int price_per_hour);
 
 // Функции parser.c
 int parse_input(const char *filename, EventList *event_list, int *table_count,

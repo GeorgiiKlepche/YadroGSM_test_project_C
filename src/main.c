@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
     }
 
     if (handler_events(&event_list, table_count, start_time, end_time,
-                   price_per_hour) == ERROR) {
-                    return ERROR;
-                   }
+                       price_per_hour) == ERROR) {
+        return ERROR;
+    }
 
     free_event_list(&event_list);
     return SUCCESS;

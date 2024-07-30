@@ -21,13 +21,13 @@ int parse_input(const char *filename, EventList *event_list, int *table_count,
     while (1) {
         Event event;
         int scan_count =
-            fscanf(file, "%s %d %s", event.time, &event.index, event.name);
+            fscanf(file, "%s %d %s\n", event.time, &event.index, event.name);
         if (scan_count != 3) {
             if (scan_count == EOF) {
                 break;
             } else {
-                perror("Ошибка формата времени");
-                printf("%s %d %s", event.time, event.index, event.name);
+                perror("Ошибка формата ввода");
+                printf("%s %d %s\n", event.time, event.index, event.name);
                 fclose(file);
                 free_event_list(event_list);
                 return ERROR;
@@ -36,7 +36,7 @@ int parse_input(const char *filename, EventList *event_list, int *table_count,
 
         if (event.index < 1 || event.index > 4) {
             perror("Ошибка некоректное событие");
-            printf("%s %d %s", event.time, event.index, event.name);
+            printf("%s %d %s\n", event.time, event.index, event.name);
             fclose(file);
             free_event_list(event_list);
             return ERROR;
@@ -44,8 +44,8 @@ int parse_input(const char *filename, EventList *event_list, int *table_count,
 
         if (event.index == EVENT_CLIENT_SEATED) {
             if (fscanf(file, "%d", &event.table_number) != 1) {
-                perror("Ошибка формата времени");
-                printf("%s %d %s", event.time, event.index, event.name);
+                perror("Ошибка формата ввода");
+                printf("%s %d %s\n", event.time, event.index, event.name);
                 fclose(file);
                 free_event_list(event_list);
                 return ERROR;
@@ -56,7 +56,7 @@ int parse_input(const char *filename, EventList *event_list, int *table_count,
 
         if (strcmp(event.time, last_time) < 0) {
             perror("Ошибка события происходят не по порядку времени");
-            printf("%s %d %s", event.time, event.index, event.name);
+            printf("%s %d %s\n", event.time, event.index, event.name);
             fclose(file);
             free_event_list(event_list);
             return ERROR;
